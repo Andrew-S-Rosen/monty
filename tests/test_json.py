@@ -751,6 +751,13 @@ class TestJson:
         assert clean_recursive_msonable["hello"][0]["c"] == 3
         assert clean_recursive_msonable["hello"][1] == "test"
 
+        d = {"hello": (GoodMSONClass(1, 2, 3), "test"), "test": "hi"}
+        clean_recursive_msonable = jsanitize(d, recursive_msonable=True)
+        assert clean_recursive_msonable["hello"][0]["a"] == 1
+        assert clean_recursive_msonable["hello"][0]["b"] == 2
+        assert clean_recursive_msonable["hello"][0]["c"] == 3
+        assert clean_recursive_msonable["hello"][1] == "test"
+
         d = {"dt": datetime.datetime.now()}
         clean = jsanitize(d)
         assert isinstance(clean["dt"], str)
